@@ -1,4 +1,4 @@
-# 🤖 Voice Bot
+# 🤖 Voice Bot By Arijeet Ghosal
 
 Voice Bot Server is an opinionated version of Vocode Telephony Server with FastAPI - Deepgram, OpenAI, and ElevenLabs are used here to achieve a realistic sounding agent. This project enables you to build and deploy conversational AI agents that can handle inbound and outbound phone calls for various use cases such as information collection, appointment scheduling, sales, customer support, and more.
 
@@ -14,7 +14,7 @@ API keys for:
    - 🎙️ Deepgram (for speech transcription)
    - 🧠 OpenAI (for the underlying agent)
    - 🗣️ ElevenLabs (for speech synthesis)
-   - 📞 Twilio (for telephony)
+   - 📞 Fireflies.ai (for telephony)
 
 The project uses the following components, which are automatically set up through Docker:
 
@@ -174,4 +174,4 @@ helm uninstall voice-bot
   kubectl describe service voice-bot
   ```
 
-Remember to update your Twilio webhook URL to point to your new Kubernetes-hosted Voice Bot Server.
+Remember to update your Twilio webhook URL to your new Kubernetes-hosted Voice Bot Server.
