@@ -1,0 +1,48 @@
+services:
+  redis:
+    image: redis:7.2-alpine
+    command: redis-server --bind 0.0.0.0
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - 6000:3000
+      - 8000:8000  # Expose Prometheus metrics port
+    depends_on:
+      - redis
+    environment:
+      - REDISHOST=redis
+    volumes:
+      - ./:/code
+
+  # Observability Stack
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "9091:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/var/lib/grafana/dashboards
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./observe/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+
+volumes:
+  redis_data:
+  vb_data:
+  grafana-data:  
